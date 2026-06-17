@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Explorer</title>
+    
+    <!-- Google Fonts: Nunito (bordes suaves, ideal para Neumorfismo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Estructural y Tema Base -->
+    <link rel="stylesheet" href="src/ui/styles/base.css">
+    <link rel="stylesheet" href="src/ui/styles/details.css">
+    <link rel="stylesheet" href="src/ui/styles/tree.css">
+    <link rel="stylesheet" href="src/ui/styles/markdown.css">
+
+    <!-- Librerías Externas (CDNs) -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- Highlight.js Theme (Modo Claro por defecto) -->
+    <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="header neumorphic-panel">
+            <div class="logo">
+                <a href="https://github.com" target="_blank" class="neumorphic-btn icon-btn" title="Ir a GitHub">
+                    <i data-feather="github"></i>
+                </a>
+                <h1>gitView</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" id="repo-input" class="neumorphic-input" placeholder="Ej: facebook/react">
+                    <button id="search-btn" class="neumorphic-btn">
+                        <i data-feather="search"></i> Explorar
+                    </button>
+                </div>
+
+                <div class="actions">
+                    <!-- BOTÓN MODO OSCURO/CLARO -->
+                    <button id="theme-toggle" class="neumorphic-btn icon-btn" title="Cambiar Tema">
+                        <i data-feather="moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT (2 Columnas) -->
+        <main class="main-layout">
+            
+            <!-- PANEL IZQUIERDO: Árbol de carpetas -->
+            <aside class="tree-panel neumorphic-panel" id="tree-panel">
+                <div class="panel-placeholder">
+                    <i data-feather="folder"></i>
+                    <p>Ingresa un repositorio para explorar</p>
+                </div>
+            </aside>
+
+            <!-- Separador arrastrable -->
+            <div id="resizer" class="resizer" title="Arrastra para redimensionar"></div>
+
+            <!-- PANEL DERECHO: Detalles y Código -->
+            <section class="details-panel neumorphic-panel" id="details-panel">
+                <div class="panel-placeholder">
+                    <i data-feather="file-text"></i>
+                    <p>Selecciona un archivo para ver su contenido</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Script Principal (Módulo) -->
+    <script type="module" src="src/index.js"></script>
+
+    <!-- Inicializar iconos al cargar la estructura -->
+    <script>
+      feather.replace();
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/* src/ui/styles/details.css */
+
+.repo-info-view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.repo-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.repo-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--accent-color);
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge.public {
+    background-color: #48bb78; /* Verde */
+    color: white;
+}
+
+.badge.private {
+    background-color: #f56565; /* Rojo */
+    color: white;
+}
+
+.repo-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.repo-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Estadística con estilo neumórfico */
+.neumorphic-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    background-color: var(--bg-color);
+    box-shadow: 
+        5px 5px 10px var(--shadow-dark), 
+        -5px -5px 10px var(--shadow-light);
+    font-weight: 600;
+}
+
+.neumorphic-stat i {
+    color: var(--accent-color);
+}
+
+/* Elemento Neumórfico clickeable (Enlaces o Botones) */
+.neumorphic-stat.clickable {
+    text-decoration: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+.neumorphic-stat.clickable:hover {
+    /* Se hunde al pasar el mouse */
+    box-shadow: 
+        inset 3px 3px 6px var(--shadow-dark), 
+        inset -3px -3px 6px var(--shadow-light);
+    color: var(--accent-color);
+}
+
+.neumorphic-stat.clickable:active {
+    box-shadow: 
+        inset 5px 5px 10px var(--shadow-dark), 
+        inset -5px -5px 10px var(--shadow-light);
+}

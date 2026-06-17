@@ -1,0 +1,169 @@
+/* src/ui/styles/markdown.css */
+
+.markdown-container {
+    /* Efecto Neumórfico de pantalla hundida */
+    background-color: var(--bg-color);
+    box-shadow: 
+        inset 6px 6px 12px var(--shadow-dark), 
+        inset -6px -6px 12px var(--shadow-light);
+    border-radius: 12px;
+    padding: 30px;
+    overflow-y: auto;
+    height: calc(100% - 50px);
+    color: var(--text-color);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Custom Scrollbar para el contenedor y los bloques de código */
+.markdown-container::-webkit-scrollbar,
+.markdown-container pre::-webkit-scrollbar,
+.markdown-container code::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Crucial para el scroll horizontal en el código */
+}
+.markdown-container::-webkit-scrollbar-track,
+.markdown-container pre::-webkit-scrollbar-track,
+.markdown-container code::-webkit-scrollbar-track {
+    background: transparent;
+}
+.markdown-container::-webkit-scrollbar-thumb,
+.markdown-container pre::-webkit-scrollbar-thumb,
+.markdown-container code::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+    opacity: 0.5;
+}
+.markdown-container::-webkit-scrollbar-thumb:hover,
+.markdown-container pre::-webkit-scrollbar-thumb:hover,
+.markdown-container code::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color); /* Un toque de color al interactuar */
+}
+
+/* Estilos de tipografía para el contenido parseado */
+.markdown-container h1, 
+.markdown-container h2, 
+.markdown-container h3 {
+    color: var(--accent-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid var(--shadow-dark);
+    padding-bottom: 0.3em;
+}
+
+.markdown-container h1 { font-size: 2em; margin-top: 0; }
+.markdown-container h2 { font-size: 1.5em; }
+
+.markdown-container p, 
+.markdown-container ul, 
+.markdown-container ol {
+    margin-bottom: 1em;
+}
+
+.markdown-container ul, .markdown-container ol {
+    padding-left: 2em;
+}
+
+.markdown-container a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.markdown-container a:hover {
+    text-decoration: underline;
+}
+
+.markdown-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 3px 3px 6px var(--shadow-dark);
+}
+
+/* Modificador para archivos de código puro (NO Markdown) */
+.markdown-container.pure-code {
+    padding: 0; /* Quitamos el padding para que el código ocupe todo */
+    overflow: hidden; /* El scroll lo manejará el pre interior */
+}
+
+.markdown-container.pure-code pre {
+    margin: 0;
+    box-shadow: none; /* Quitamos la caja extruida, se fusiona con el fondo hundido */
+    border-radius: 12px;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+/* IMPORTANTE: Sobrescribir el fondo que Highlight.js le pone al código por defecto */
+.markdown-container .hljs {
+    background: transparent !important;
+    color: var(--text-color) !important; /* Para que el texto plano cambie con el modo claro/oscuro */
+}
+
+/* Bloques de Código en Markdown normal */
+.markdown-container pre {
+    /* Efecto extruido para que el bloque de código resalte dentro del área hundida */
+    background-color: var(--bg-color) !important;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-x: auto;
+    box-shadow: 
+        3px 3px 6px var(--shadow-dark), 
+        -3px -3px 6px var(--shadow-light);
+    margin: 1.5em 0;
+}
+
+.markdown-container code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    border-radius: 4px;
+}
+
+/* Inline code (código dentro de un párrafo) */
+.markdown-container p code, 
+.markdown-container li code {
+    background-color: var(--shadow-dark);
+    padding: 2px 6px;
+    color: var(--accent-color);
+}
+
+.markdown-container blockquote {
+    border-left: 4px solid var(--accent-color);
+    margin: 0 0 1em 0;
+    padding-left: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.markdown-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+}
+
+.markdown-container th, 
+.markdown-container td {
+    border: 1px solid var(--shadow-dark);
+    padding: 10px 15px;
+}
+
+.markdown-container th {
+    background-color: var(--shadow-dark);
+    color: var(--text-color);
+}
+
+/* Cabecera del Visor */
+.markdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.markdown-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-color);
+}

@@ -1,0 +1,117 @@
+/* src/ui/styles/tree.css */
+
+.tree-container {
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 5px; /* Espacio para el scrollbar */
+}
+
+/* Custom Neumorphic Scrollbar para webkit */
+.tree-container::-webkit-scrollbar {
+    width: 6px; /* Aún más delicado */
+}
+.tree-container::-webkit-scrollbar-track {
+    background: transparent; /* Fondo transparente, sin sombra interna pesada */
+}
+.tree-container::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 3px;
+    opacity: 0.5;
+}
+.tree-container::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+.tree-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tree-item {
+    margin: 5px 0;
+}
+
+/* Efecto Neumórfico suave al pasar el mouse por los items */
+.tree-item-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    user-select: none;
+    background-color: transparent;
+    font-size: 0.95rem;
+    overflow: hidden; /* Necesario para truncar el texto */
+}
+
+.tree-item-label span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1; /* Ocupa el resto del espacio permitiendo ellipsis */
+}
+
+.tree-item-label:hover {
+    background-color: var(--bg-color);
+    box-shadow: 
+        3px 3px 6px var(--shadow-dark), 
+        -3px -3px 6px var(--shadow-light);
+    color: var(--accent-color);
+}
+
+/* Estilo para cuando un archivo está seleccionado */
+.tree-item-label.active {
+    color: var(--accent-color);
+    font-weight: 700;
+    /* Se elimina la caja hundida para que no parezca un molde roto al clickear carpetas */
+}
+
+.tree-item-label i {
+    flex-shrink: 0; /* Previene que los iconos se encojan cuando el texto es largo */
+    width: 16px;
+    height: 16px;
+}
+
+/* Icono de chevron para expandir carpetas */
+.chevron-icon {
+    margin-left: auto; /* Empuja el chevron a la derecha */
+    transition: transform 0.3s ease;
+    opacity: 0.5;
+}
+
+.tree-item.expanded > .tree-item-label .chevron-icon {
+    transform: rotate(90deg); /* Rota al expandir */
+}
+
+/* Contenedor de sub-carpetas (indentación jerárquica) */
+.tree-children {
+    display: none;
+    padding-left: 20px;
+    border-left: 1px dashed var(--text-muted);
+    margin-left: 18px;
+    margin-top: 5px;
+}
+
+.tree-item.expanded > .tree-children {
+    display: block;
+}
+
+/* Animación de carga dentro del árbol */
+.tree-loading {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.tree-loading i {
+    animation: spin 1s linear infinite;
+    width: 14px;
+    height: 14px;
+}
