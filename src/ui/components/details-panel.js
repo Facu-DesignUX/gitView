@@ -131,11 +131,22 @@ export class DetailsPanel {
 
             // 4. Renderizar Visor Neumórfico
             const iconName = getFileIcon(fileItem.name, fileItem.type);
+            const isIsolatedMode = new URLSearchParams(window.location.search).has('file');
+            
+            const popoutOrRestoreBtnHTML = isIsolatedMode 
+                ? `<button id="restore-app-btn" class="neumorphic-btn icon-btn" title="Mostrar explorador completo">
+                       <i data-feather="sidebar"></i>
+                   </button>`
+                : `<button id="popout-btn" class="neumorphic-btn icon-btn" title="Abrir en nueva pestaña">
+                       <i data-feather="external-link"></i>
+                   </button>`;
+
             this.container.innerHTML = `
                 <div style="display: flex; flex-direction: column; height: 100%; min-width: 0;">
                     <div class="markdown-header">
                         <h3><i data-feather="${iconName}"></i> ${fileItem.name}</h3>
                         <div style="display: flex; gap: 10px;">
+                            ${popoutOrRestoreBtnHTML}
                             <button id="copy-btn" class="neumorphic-btn icon-btn" title="Copiar código">
                                 <i data-feather="copy"></i>
                             </button>
@@ -164,6 +175,33 @@ export class DetailsPanel {
             }
 
             // 5. Lógica de los botones
+            if (isIsolatedMode) {
+                document.getElementById('restore-app-btn')?.addEventListener('click', () => {
+                    // Restaurar la cabecera y el panel izquierdo quitando los display: none directos
+                    document.querySelector('.header').style.display = '';
+                    document.getElementById('tree-panel').style.display = '';
+                    document.getElementById('resizer').style.display = '';
+                    
+                    // Modificamos la URL para salir del modo aislado (sin recargar la página)
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('file');
+                    window.history.pushState({}, '', url);
+                    
+                    // Recargamos solo la UI de este visor para que cambie el botón a external-link
+                    this.showFilePreview(fileItem);
+                });
+            } else {
+                document.getElementById('popout-btn')?.addEventListener('click', () => {
+                    const repoInfo = store.getState().currentRepo;
+                    if (repoInfo && fileItem.path) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('repo', repoInfo.full_name);
+                        url.searchParams.set('file', fileItem.path);
+                        window.open(url.href, '_blank');
+                    }
+                });
+            }
+
             document.getElementById('close-preview-btn').addEventListener('click', () => {
                 store.setState({ selectedFile: null });
                 this.container.classList.remove('fullscreen'); // Salir de fullscreen si estaba activo

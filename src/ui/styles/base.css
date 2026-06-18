@@ -77,7 +77,7 @@ body {
     display: flex;
     gap: 15px;
     flex: 1;
-    max-width: 500px; /* Tamaño máximo moderado para que no ocupe todo el espacio a la izquierda */
+    max-width: 400px; /* Acortado a petición del usuario para mejor proporción */
 }
 
 .main-layout {
@@ -94,6 +94,12 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
+}
+
+/* Ocultar elementos cuando se colapsa el panel izquierdo */
+.tree-panel.hidden,
+.resizer.hidden {
+    display: none !important;
 }
 
 .details-panel {

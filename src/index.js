@@ -12,6 +12,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailsPanel = new DetailsPanel('details-panel');
     const treePanel = new TreePanel('tree-panel');
 
+    // 1.5 Lógica de Modo Visor Aislado
+    const urlParams = new URLSearchParams(window.location.search);
+    const repoParam = urlParams.get('repo');
+    const fileParam = urlParams.get('file');
+
+    if (repoParam && fileParam) {
+        // Entramos en Modo Aislado
+        document.querySelector('.header').style.display = 'none';
+        document.getElementById('tree-panel').style.display = 'none';
+        document.getElementById('resizer').style.display = 'none';
+
+        const [owner, repo] = repoParam.split('/');
+
+        // Usamos una IIFE asíncrona para no bloquear
+        (async () => {
+            try {
+                store.setState({ loading: true, error: null });
+                
+                // Petición en paralelo: info general + contenido específico del archivo + árbol de carpetas base
+                const [repoData, fileData, treeData] = await Promise.all([
+                    GitHubAPI.fetchRepoInfo(owner, repo),
+                    GitHubAPI.fetchContents(owner, repo, fileParam),
+                    GitHubAPI.fetchContents(owner, repo, '') // Descargamos el árbol base para cuando restaure la app
+                ]);
+                
+                // Actualizar store: el DetailsPanel y TreePanel escucharán el evento.
+                store.setState({ 
+                    currentRepo: repoData, 
+                    selectedFile: fileData, 
+                    treeData: treeData,
+                    loading: false 
+                });
+            } catch (error) {
+                console.error("Error en Modo Aislado:", error);
+                document.getElementById('details-panel').innerHTML = `
+                    <div class="panel-placeholder" style="color: #f56565;">
+                        <i data-feather="alert-circle"></i>
+                        <p>Error al cargar el archivo en modo aislado: ${error.message}</p>
+                    </div>`;
+                if (window.feather) feather.replace();
+            }
+        })();
+        
+        // No hacemos return para que los event listeners del modo normal se activen en background
+    }
+
     // Lógica del Redimensionador (Resizer)
     const resizer = document.getElementById('resizer');
     const leftSide = document.getElementById('tree-panel');
@@ -44,6 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.cursor = 'default';
             document.body.style.userSelect = 'auto';
         }
+    });
+
+    // Lógica para Ocultar/Mostrar el panel izquierdo
+    const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+    const treePanelEl = document.getElementById('tree-panel');
+    const resizerEl = document.getElementById('resizer');
+
+    toggleSidebarBtn.addEventListener('click', () => {
+        treePanelEl.classList.toggle('hidden');
+        resizerEl.classList.toggle('hidden');
     });
 
     // 2. Lógica del Modo Claro / Oscuro

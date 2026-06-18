@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repo Explorer</title>
-    
+    <title>gitView</title>
+
     <!-- Google Fonts: Nunito (bordes suaves, ideal para Neumorfismo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- CSS Estructural y Tema Base -->
     <link rel="stylesheet" href="src/ui/styles/base.css">
     <link rel="stylesheet" href="src/ui/styles/details.css">
@@ -21,13 +22,15 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    
+
     <!-- Highlight.js Theme (Modo Claro por defecto) -->
-    <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link id="hljs-theme" rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 </head>
+
 <body>
     <div class="app-container">
-        
+
         <!-- HEADER -->
         <header class="header neumorphic-panel">
             <div class="logo">
@@ -36,7 +39,7 @@
                 </a>
                 <h1>gitView</h1>
             </div>
-            
+
             <div class="header-right">
                 <div class="search-bar">
                     <input type="text" id="repo-input" class="neumorphic-input" placeholder="Ej: facebook/react">
@@ -45,7 +48,16 @@
                     </button>
                 </div>
 
-                <div class="actions">
+                <div class="actions" style="display: flex; gap: 10px;">
+                    <!-- BOTÓN OCULTAR PANEL -->
+                    <button id="toggle-sidebar" class="neumorphic-btn icon-btn" title="Ocultar/Mostrar Explorador">
+                        <i data-feather="sidebar"></i>
+                    </button>
+                    <!-- BOTÓN MODO INTERACTIVO (A Futuro) -->
+                    <button id="interactive-mode" class="neumorphic-btn icon-btn"
+                        title="Modo Arquitectura (Próximamente)" style="opacity: 0.5; cursor: not-allowed;">
+                        <i data-feather="share-2"></i>
+                    </button>
                     <!-- BOTÓN MODO OSCURO/CLARO -->
                     <button id="theme-toggle" class="neumorphic-btn icon-btn" title="Cambiar Tema">
                         <i data-feather="moon"></i>
@@ -56,7 +68,7 @@
 
         <!-- MAIN LAYOUT (2 Columnas) -->
         <main class="main-layout">
-            
+
             <!-- PANEL IZQUIERDO: Árbol de carpetas -->
             <aside class="tree-panel neumorphic-panel" id="tree-panel">
                 <div class="panel-placeholder">
@@ -84,7 +96,8 @@
 
     <!-- Inicializar iconos al cargar la estructura -->
     <script>
-      feather.replace();
+        feather.replace();
     </script>
 </body>
+
 </html>
